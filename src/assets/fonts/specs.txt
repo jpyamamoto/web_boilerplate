@@ -1,0 +1,7 @@
+Use directory to store font files.
+
+Extensions reference:
+* woff
+* otf
+* ttf
+* svg

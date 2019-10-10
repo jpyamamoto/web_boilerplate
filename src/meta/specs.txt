@@ -1,0 +1,10 @@
+Use directory to store meta files.
+Place imports at the specified block in index.html
+Suggested tool: https://realfavicongenerator.net/
+
+Extensions reference:
+* ico
+* png
+* webmanifest
+* xml
+

@@ -1,0 +1,37 @@
+/*
+ *
+ * Main styles file.
+ *
+ * Secondary styling files should be imported under the styles.js entrypoint.
+ *
+ */
+
+/*
+ *
+ * Styling is based on the TailwindCSS framework.
+ *
+ * Docs:
+ * https://tailwindcss.com/
+ *
+ * Modifications can take place under the tailwind.config.js file.
+ *
+ */
+
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+/*
+ *
+ * Import fonts. Example:
+ *
+ * @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500&display=swap');
+ *
+ * body {
+ *   font-family: 'Montserrat', sans-serif;
+ * }
+ *
+ */
+

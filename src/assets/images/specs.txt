@@ -1,0 +1,7 @@
+Use directory to store images and icons.
+Video files and vectors should be under a different directory.
+
+Extensions reference:
+* jpg
+* png
+* gif
