@@ -50,10 +50,22 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === 'development',
+            },
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
         ]
+      },
+      {
+        test: /\.(hbs|handlebars)$/,
+        loader: 'handlebars-loader'
       },
       {
         test: /\.(png|jpg|svg|gif|webm|mp4|ttf|eot|woff)$/,
@@ -71,9 +83,16 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './src/pages/index.html',
+      template: './src/pages/index.hbs',
       filename: './index.html',
-      chunks: ['main', 'styles']
+      chunks: ['main', 'styles'],
+      minify: process.env.NODE_ENV === 'production' ? {
+        html5: true,
+        collapseWhitespace: true,
+        caseSensitive: true,
+        removeComments: true,
+        removeEmptyElements: true
+      } : {},
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
@@ -82,11 +101,11 @@ module.exports = {
     new CleanWebpackPlugin(),
     // Comment when not importing meta files (Eg. favicons, browser specs, etc).
     new CopyWebpackPlugin([
-      {from: './src/meta', to: './'},
+      { from: './src/meta', to: './' },
     ]),
     new ImageminPlugin({
       // Uncomment for testing purposes.
-      // disable: true,
+      disable: process.env.NODE_ENV === 'development',
       test: /\.(jpe?g|png|gif|svg)$/i,
       minFileSize: 500000,
       pngquant: {
