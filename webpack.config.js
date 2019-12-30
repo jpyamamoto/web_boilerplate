@@ -1,13 +1,24 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+const autoprefixer = require('autoprefixer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const TerserPlugin = require('terser-webpack-plugin');
+
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
+
+const APP_NAME = 'Web Boilerplate';
+const APP_DESCRIPTION = 'Boilerplate for landing pages';
+const APP_BACKGROUND_COLOR = '#252627';
+const APP_THEME_COLOR = '#292A2D'
+
 
 module.exports = {
   entry: {
@@ -98,11 +109,24 @@ module.exports = {
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].css'
     }),
+    ...process.env.NODE_ENV === 'production' ? [new FaviconsWebpackPlugin({
+      logo: './src/meta/favicon.png',
+      mode: 'webapp',
+      devMode: 'webapp',
+      favicons: {
+        appName: APP_NAME,
+        appDescription: APP_DESCRIPTION,
+        developerName: 'Juan Pablo Yamamoto',
+        developerURL: 'https://jpyamamoto.com/',
+        background: APP_BACKGROUND_COLOR,
+        theme_color: APP_THEME_COLOR,
+        icons: {
+          coast: false,
+          yandex: false
+        }
+      }
+    })] : [],
     new CleanWebpackPlugin(),
-    // Comment when not importing meta files (Eg. favicons, browser specs, etc).
-    new CopyWebpackPlugin([
-      { from: './src/meta', to: './' },
-    ]),
     new ImageminPlugin({
       // Uncomment for testing purposes.
       disable: process.env.NODE_ENV === 'development',
